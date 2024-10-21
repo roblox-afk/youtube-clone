@@ -27,7 +27,7 @@ export default function Sidebar() {
 	}; // TODO: replace with data from database
 	return (
 		<div className="flex h-full w-60 overflow-y-hidden">
-			<div className="flex flex-col">
+			<div className="flex flex-col overflow-x-hidden">
 				<div className="p-3 space-y-1 w-full">
 					<SidebarItem
 						Icon={Home}
