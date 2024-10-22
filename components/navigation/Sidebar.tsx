@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { usePathname } from "next/navigation";
+import ChannelPage from "./ChannelStatus";
 
 export default function Sidebar() {
 	const pathname: string = usePathname();
@@ -92,6 +93,8 @@ export default function Sidebar() {
 				<div className="w-full my-3 h-[1px] bg-neutral-800" />
 				<div className="p-3 space-y-1 w-full">
 					<span className="text-white font-medium px-4">Abonnementer</span>
+					<ChannelPage />
+					<ChannelPage />
 				</div>
 				<div className="w-full my-3 h-[1px] bg-neutral-800" />
 				<div className="p-3 space-y-1 w-full">
