@@ -7,12 +7,10 @@ export default function MainPageLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="w-screen h-screen">
+		<div className="w-screen h-screen flex flex-col">
 			<NavBar isLoggedIn={false} />
-			<main>
-				<Sidebar />
-				{children}
-			</main>
+			<Sidebar />
+			<main>{children}</main>
 		</div>
 	);
 }

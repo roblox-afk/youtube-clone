@@ -1,0 +1,44 @@
+{
+	"Navbar": {
+		"searchPlaceholder": "Search"
+	},
+	"Sidebar": {
+		"home": "Home",
+		"you": {
+			"title": "You",
+			"history": "History",
+			"playlists": "Playlists",
+			"videos": "Your videos",
+			"watchLater": "Watch later",
+			"likedVideos": "Liked videos"
+		},
+		"subscriptions": {
+			"title": "Subscriptions",
+			"alleSubscriptions": "All Subscriptions",
+			"showMore": "Show more",
+			"showLess": "Show less"
+		},
+		"explore": {
+			"title": "Explore",
+			"trending": "Trending",
+			"music": "Music",
+			"movies": "Movies",
+			"gaming": "Gaming",
+			"sports": "Sports",
+			"podcasts": "Podcasts"
+		},
+		"moreFromYouTube": {
+			"title": "More from YouTube",
+			"premium": "YouTube Premium",
+			"studio": "YouTube Studio",
+			"music": "YouTube Music",
+			"kids": "YouTube Kids"
+		},
+		"misc": {
+			"settings": "Settings",
+			"reportHistory": "Report history",
+			"help": "Help",
+			"feedback": "Send feedback"
+		}
+	}
+}

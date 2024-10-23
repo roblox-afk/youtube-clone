@@ -1,0 +1,44 @@
+{
+	"Navbar": {
+		"searchPlaceholder": "Søk"
+	},
+	"Sidebar": {
+		"home": "Startside",
+		"you": {
+			"title": "Deg",
+			"history": "Logg",
+			"playlists": "Spillelister",
+			"videos": "Videoene dine",
+			"watchLater": "Se senere",
+			"likedVideos": "Likte videoer"
+		},
+		"subscriptions": {
+			"title": "Abonnementer",
+			"alleSubscriptions": "Alle abonnementer",
+			"showMore": "Vis mer",
+			"showLess": "Vis fære"
+		},
+		"explore": {
+			"title": "Utforsk",
+			"trending": "På vei opp",
+			"music": "Musikk",
+			"movies": "Filmer",
+			"gaming": "Gaming",
+			"sports": "Sport",
+			"podcasts": "Podcaster"
+		},
+		"moreFromYouTube": {
+			"title": "Mer fra YouTube",
+			"premium": "YouTube Premium",
+			"studio": "YouTube Studio",
+			"music": "YouTube Music",
+			"kids": "YouTube Kids"
+		},
+		"misc": {
+			"settings": "Innstillinger",
+			"reportHistory": "Rapportlogg",
+			"help": "Hjelp",
+			"feedback": "Send tilbakemelding"
+		}
+	}
+}

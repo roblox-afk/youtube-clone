@@ -1,5 +1,6 @@
 import { Menu, Search, Mic, Upload, Bell, User } from "lucide-react";
-import YoutubeImage from "@/public/YouTube_Logo.svg";
+import YoutubeImageDark from "@/public/YouTube_Logo_Black.svg";
+import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
 
 export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -11,8 +12,8 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 				</button>
 				<a className="flex" href="">
 					<Image
-						className="ml-4"
-						src={YoutubeImage}
+						className="ml-4 fill-white"
+						src={YoutubeImageLight}
 						alt="test"
 						width={90}
 						height={20}
@@ -22,10 +23,10 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 					</span>
 				</a>
 			</div>
-			<div className="flex h-10 items-center">
+			<div className="sm:flex h-10 items-center hidden">
 				<div className="h-full ml-8 pl-2 bg-stone-950 border-neutral-700 float-start border has-[:focus]:border-blue-400 has-[:focus]:ml-0 rounded-l-full items-center flex flex-row-reverse left-2">
 					<input
-						className="h-full sm:w-80 lg:w-[515px] placeholder-neutral-500 peer bg-transparent focus:outline-none p-2 placeholder:font-medium"
+						className="flex h-full ~sm/lg:~w-32/[32rem] placeholder-neutral-500 peer bg-transparent focus:outline-none p-2 placeholder:font-medium"
 						type="text"
 						placeholder="Søk"
 					/>
