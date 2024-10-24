@@ -1,4 +1,14 @@
 {
+	"Auth": {
+		"signUp": {
+			"title": "Sign up",
+			"subTitle": "Just some details to get you in!"
+		},
+		"signIn": {
+			"title": "Sign in",
+			"subTitle": "Glad you're back!"
+		}
+	},
 	"Navbar": {
 		"searchPlaceholder": "Søk"
 	},

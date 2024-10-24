@@ -1,9 +1,14 @@
+"use client";
 import { Menu, Search, Mic, Upload, Bell, User } from "lucide-react";
 import YoutubeImageDark from "@/public/YouTube_Logo_Black.svg";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
+	const t = useTranslations("Navbar");
+	const router = useRouter();
 	return (
 		<div className="flex h-14 mx-4 items-center justify-between text-white">
 			<div className="flex">
@@ -28,7 +33,7 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 					<input
 						className="flex h-full ~sm/lg:~w-32/[32rem] placeholder-neutral-500 peer bg-transparent focus:outline-none p-2 placeholder:font-medium"
 						type="text"
-						placeholder="Søk"
+						placeholder={t("searchPlaceholder")}
 					/>
 					<Search
 						strokeWidth={1}
@@ -57,7 +62,11 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 						99+
 					</span>
 				</div>
-				<div className="size-10 flex justify-center items-center hover:bg-neutral-800 rounded-full my-1 mx-7">
+				<button
+					className="size-10 flex justify-center items-center hover:bg-neutral-800 rounded-full my-1 mx-7"
+					onClick={() => router.push("/sign-in")}
+					type="button"
+				>
 					{/* //TODO: Get Profile Picture if signed in. */}
 					{isLoggedIn ? (
 						<Image
@@ -70,7 +79,7 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 					) : (
 						<User strokeWidth={1} />
 					)}
-				</div>
+				</button>
 			</div>
 		</div>
 	);
