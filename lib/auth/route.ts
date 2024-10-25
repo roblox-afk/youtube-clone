@@ -3,8 +3,9 @@ import { auth } from "./auth";
 
 const app = new Hono();
 
-app.on(["POST", "GET"], "**", (c) => {
-	return auth.handler(c.req.raw);
-});
+app.get("/auth/*", (c) => auth.handler(c.req.raw));
+app.post("/auth/*", (c) => auth.handler(c.req.raw));
+
+app.get("/hello", (c) => c.json({ hello: "world" }));
 
 export default app;

@@ -2,7 +2,13 @@
 	"Auth": {
 		"signUp": {
 			"title": "Sign up",
-			"subTitle": "Just some details to get you in!"
+			"subTitle": "Just some details to get you in!",
+			"continue": "Continue",
+			"onBoarding": {
+				"title": "Onboarding",
+				"subTitle": "Let´s customize some things!",
+				"finish": "Finish"
+			}
 		},
 		"signIn": {
 			"title": "Sign in",
