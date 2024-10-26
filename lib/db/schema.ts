@@ -1,4 +1,12 @@
-import { boolean, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import {
+	boolean,
+	pgTable,
+	text,
+	timestamp,
+	varchar,
+	integer,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
 	id: varchar().primaryKey().notNull(),
@@ -10,6 +18,7 @@ export const users = pgTable("users", {
 	updatedAt: timestamp().notNull(),
 
 	subscriptions: varchar().array().notNull(),
+	channelId: varchar().references(() => channels.id),
 });
 
 export const sessions = pgTable("sessions", {
@@ -36,4 +45,69 @@ export const verifications = pgTable("verifications", {
 	identifier: varchar().notNull(),
 	value: varchar().notNull(),
 	expiresAt: timestamp().notNull(),
+});
+
+export const channels = pgTable("channels", {
+	id: text().primaryKey(),
+	slash: varchar({ length: 50 }).notNull().unique(),
+	name: text().notNull(),
+	description: text(),
+	bannerImage: varchar(),
+	image: varchar().notNull(),
+	videos: text()
+		.array()
+		.notNull()
+		.default(sql`ARRAY[]::text[]`),
+	posts: text()
+		.array()
+		.notNull()
+		.default(sql`ARRAY[]::text[]`),
+	subscribers: integer().default(0),
+	createdAt: timestamp().defaultNow().notNull(),
+});
+
+export const videos = pgTable("videos", {
+	id: text().primaryKey().notNull(),
+	thumbnailUrl: varchar().default("").notNull(),
+	sourceUrl: varchar().notNull(),
+	title: text().notNull(),
+	description: text().default("").notNull(),
+	isPublic: boolean().default(false).notNull(),
+	isDraft: boolean().default(true).notNull(),
+	comments: text()
+		.array()
+		.notNull()
+		.default(sql`ARRAY[]::text[]`),
+	likes: integer().default(0).notNull(),
+	disLikes: integer().default(0).notNull(),
+	views: integer().default(0).notNull(),
+	createdAt: timestamp().defaultNow().notNull(),
+});
+
+export type NewVideo = typeof videos.$inferInsert;
+
+export const posts = pgTable("posts", {
+	id: text().primaryKey(),
+	content: text().notNull(),
+	linkedVideo: varchar(),
+	linkedImage: varchar(),
+	comments: text()
+		.array()
+		.notNull()
+		.default(sql`ARRAY[]::text[]`),
+	likes: integer().default(0),
+	disLikes: integer().default(0),
+	createdAt: timestamp().defaultNow().notNull(),
+});
+
+export const comments = pgTable("comments", {
+	id: text().primaryKey(),
+	content: text().notNull(),
+	likes: integer().default(0),
+	disLikes: integer().default(0),
+	comments: text()
+		.array()
+		.notNull()
+		.default(sql`ARRAY[]::text[]`),
+	createdAt: timestamp().defaultNow().notNull(),
 });

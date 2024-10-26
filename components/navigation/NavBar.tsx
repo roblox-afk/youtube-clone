@@ -1,6 +1,5 @@
 "use client";
 import { Menu, Search, Mic, Upload, Bell } from "lucide-react";
-import YoutubeImageDark from "@/public/YouTube_Logo_Black.svg";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";

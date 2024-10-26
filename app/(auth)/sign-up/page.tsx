@@ -49,7 +49,7 @@ const signUpSchema = z
 export default function SignUpPage() {
 	const t = useTranslations("Auth.signUp");
 	const router = useRouter();
-	const imageInput = useRef(null);
+	const imageInput = useRef<HTMLInputElement>(null);
 	const [currentTab, setCurrentTab] = useState("firstPage");
 	const [loadingImage, setLoadingImage] = useState(false);
 	const [image, setImage] = useState<string>("");
