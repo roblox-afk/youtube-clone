@@ -8,6 +8,8 @@ export const users = pgTable("users", {
 	image: varchar(),
 	createdAt: timestamp().defaultNow().notNull(),
 	updatedAt: timestamp().notNull(),
+
+	subscriptions: varchar().array().notNull(),
 });
 
 export const sessions = pgTable("sessions", {

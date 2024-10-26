@@ -1,14 +1,13 @@
 "use client";
-import { Menu, Search, Mic, Upload, Bell, User } from "lucide-react";
+import { Menu, Search, Mic, Upload, Bell } from "lucide-react";
 import YoutubeImageDark from "@/public/YouTube_Logo_Black.svg";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import ProfileIconWidget from "./Icons/ProfileIconWidget";
 
-export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function NavBar() {
 	const t = useTranslations("Navbar");
-	const router = useRouter();
 	return (
 		<div className="flex h-14 mx-4 items-center justify-between text-white">
 			<div className="flex">
@@ -62,24 +61,7 @@ export default function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
 						99+
 					</span>
 				</div>
-				<button
-					className="size-10 flex justify-center items-center hover:bg-neutral-800 rounded-full my-1 mx-7"
-					onClick={() => router.push("/sign-in")}
-					type="button"
-				>
-					{/* //TODO: Get Profile Picture if signed in. */}
-					{isLoggedIn ? (
-						<Image
-							className="rounded-full"
-							src={"https://placehold.co/40x40"}
-							alt="profile picture"
-							width={40}
-							height={40}
-						/>
-					) : (
-						<User strokeWidth={1} />
-					)}
-				</button>
+				<ProfileIconWidget />
 			</div>
 		</div>
 	);

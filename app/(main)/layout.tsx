@@ -8,7 +8,7 @@ export default function MainPageLayout({
 }) {
 	return (
 		<div className="w-screen h-screen flex flex-col">
-			<NavBar isLoggedIn={false} />
+			<NavBar />
 			<Sidebar />
 			<main>{children}</main>
 		</div>
