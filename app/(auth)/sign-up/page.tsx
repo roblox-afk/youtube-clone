@@ -90,6 +90,7 @@ export default function SignUpPage() {
 			password: values.password,
 			name: values.username,
 			image: image,
+			slash: values.username.toLowerCase(),
 			callbackURL: "/",
 		});
 		console.log(data);

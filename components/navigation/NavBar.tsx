@@ -1,4 +1,3 @@
-"use client";
 import { Menu, Search, Mic, Upload, Bell } from "lucide-react";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
@@ -7,6 +6,7 @@ import ProfileIconWidget from "./Icons/ProfileIconWidget";
 
 export default function NavBar() {
 	const t = useTranslations("Navbar");
+
 	return (
 		<div className="flex h-14 mx-4 items-center justify-between text-white">
 			<div className="flex">

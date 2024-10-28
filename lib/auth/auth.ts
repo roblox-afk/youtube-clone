@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { multiSession } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db";
 import * as schema from "@/lib/db/schema";
@@ -12,10 +13,39 @@ export const auth = betterAuth({
 				defaultValue: [],
 				input: false,
 			},
-			channelId: {
+			videos: {
+				type: "string[]",
+				required: false,
+				defaultValue: [],
+				input: false,
+			},
+			posts: {
+				type: "string[]",
+				required: false,
+				defaultValue: [],
+				input: false,
+			},
+			slash: {
 				type: "string",
 				required: false,
 				defaultValue: null,
+			},
+			description: {
+				type: "string",
+				required: false,
+				defaultValue: null,
+				input: false,
+			},
+			bannerImage: {
+				type: "string",
+				required: false,
+				defaultValue: null,
+				input: false,
+			},
+			subscribers: {
+				type: "number",
+				required: false,
+				defaultValue: 0,
 				input: false,
 			},
 		},
@@ -36,4 +66,5 @@ export const auth = betterAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
 		},
 	},
+	plugins: [multiSession()],
 });

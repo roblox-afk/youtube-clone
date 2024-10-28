@@ -18,7 +18,12 @@ export const users = pgTable("users", {
 	updatedAt: timestamp().notNull(),
 
 	subscriptions: varchar().array().notNull(),
-	channelId: varchar().references(() => channels.id),
+	slash: varchar({ length: 50 }).notNull().unique(),
+	description: text(),
+	bannerImage: varchar(),
+	videos: text().array().notNull(),
+	posts: text().array().notNull(),
+	subscribers: integer().default(0),
 });
 
 export const sessions = pgTable("sessions", {
@@ -47,25 +52,6 @@ export const verifications = pgTable("verifications", {
 	expiresAt: timestamp().notNull(),
 });
 
-export const channels = pgTable("channels", {
-	id: text().primaryKey(),
-	slash: varchar({ length: 50 }).notNull().unique(),
-	name: text().notNull(),
-	description: text(),
-	bannerImage: varchar(),
-	image: varchar().notNull(),
-	videos: text()
-		.array()
-		.notNull()
-		.default(sql`ARRAY[]::text[]`),
-	posts: text()
-		.array()
-		.notNull()
-		.default(sql`ARRAY[]::text[]`),
-	subscribers: integer().default(0),
-	createdAt: timestamp().defaultNow().notNull(),
-});
-
 export const videos = pgTable("videos", {
 	id: text().primaryKey().notNull(),
 	thumbnailUrl: varchar().default("").notNull(),
@@ -84,6 +70,7 @@ export const videos = pgTable("videos", {
 	createdAt: timestamp().defaultNow().notNull(),
 });
 
+export type Video = typeof videos.$inferSelect;
 export type NewVideo = typeof videos.$inferInsert;
 
 export const posts = pgTable("posts", {
