@@ -2,9 +2,11 @@ import { Menu, Search, Mic } from "lucide-react";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import ProfileIconWidget from "./Icons/ProfileIconWidget";
-import UploadIconWidget from "./Icons/UploadIconWidget";
-import NotificationIconWidget from "./Icons/NotificationIconWidget";
+import {
+	NotificationIconWidget,
+	UploadIconWidget,
+	ProfileIconWidget,
+} from "./Icons";
 
 export default function NavBar() {
 	const t = useTranslations("Navbar");
