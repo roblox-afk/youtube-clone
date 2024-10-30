@@ -34,7 +34,7 @@ export default function ProfileIconWidget() {
 						>
 							{session.user.image != null ? (
 								<Image
-									className="rounded-full"
+									className="rounded-full object-fill size-10"
 									src={session.user.image}
 									alt="profile picture"
 									width={40}

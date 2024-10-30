@@ -36,7 +36,7 @@ export default function Sidebar() {
 		username: "johndoe",
 	}; // TODO: replace with data from database
 	return (
-		<div className="flex w-64 h-full grow overflow-auto scrollbar-none hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-600 scrollbar-thumb-rounded-full">
+		<div className="fixed top-14 bg-black flex w-64 h-full grow overflow-auto scrollbar-none hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-600 scrollbar-thumb-rounded-full">
 			<div className="w-60 flex-col">
 				<div className="px-3 space-y-1 w-full">
 					<SidebarItem

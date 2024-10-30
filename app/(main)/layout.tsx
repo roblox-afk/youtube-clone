@@ -7,10 +7,12 @@ export default function MainPageLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="w-screen h-screen flex flex-col">
+		<div className="max-w-screen max-h-screen flex flex-col">
 			<NavBar />
 			<Sidebar />
-			<main>{children}</main>
+			<main className="relative flex h-full flex-row ml-64 mt-14">
+				{children}
+			</main>
 		</div>
 	);
 }

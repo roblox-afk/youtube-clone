@@ -8,7 +8,7 @@ export default function NavBar() {
 	const t = useTranslations("Navbar");
 
 	return (
-		<div className="flex h-14 mx-4 items-center justify-between text-white">
+		<div className="bg-black z-[1000] fixed top-0 left-0 right-0  flex h-14 px-4 items-center justify-between text-white">
 			<div className="flex">
 				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full">
 					<Menu color="#fff" />
