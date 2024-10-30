@@ -45,7 +45,7 @@ export default function ProfileIconWidget() {
 							)}
 						</button>
 					</PopoverTrigger>
-					<PopoverContent className="w-[300px] flex-col space-y-2 mr-4 p-0 bg-neutral-800">
+					<PopoverContent className="w-[300px] flex-col space-y-2 mr-4 p-0 bg-neutral-800 z-[105]">
 						<div className="p-4 flex flex-row border-b border-neutral-600">
 							{session.user.image != null ? (
 								<Image

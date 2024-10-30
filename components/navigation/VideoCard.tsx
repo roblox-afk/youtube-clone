@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import PlaceholderProfilePicture from "@/public/Placeholder_40x40.svg";
 import { Label } from "../ui/label";
@@ -5,6 +6,7 @@ import { Video } from "@/lib/db/schema";
 import { User } from "better-auth";
 import { FormatTimeSince } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function VideoCard({
 	data,
@@ -13,10 +15,11 @@ export default function VideoCard({
 	data: Video;
 	channelData: User;
 }) {
+	const router = useRouter();
 	return (
-		<Link
-			href={"/watch?id=" + data.id}
-			className="ml-6 flex w-80 mx-2 mb-10 h-full flex-col"
+		<button
+			onClick={() => router.push("/watch?id=" + data.id)}
+			className="ml-6 flex text-left w-80 mx-2 mb-10 h-full flex-col cursor-pointer"
 		>
 			<div className="w-full h-48 bg-white rounded-xl relative object-cover">
 				<Image
@@ -53,14 +56,14 @@ export default function VideoCard({
 							{new Intl.NumberFormat("en-US", {
 								compactDisplay: "short",
 								notation: "compact",
-							}).format(data.views)}{" "}
+							}).format(data.views)}
 							views
 						</Label>
 						<div className="rounded-full size-1 bg-white mx-2" />
-						<Label>{FormatTimeSince(data.createdAt)}</Label>
+						<Label>{FormatTimeSince(data.createdAt, true)}</Label>
 					</div>
 				</div>
 			</div>
-		</Link>
+		</button>
 	);
 }

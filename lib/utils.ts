@@ -31,11 +31,16 @@ function calculateTimeDifference(time: number) {
 	};
 }
 
-export function FormatTimeSince(date: string | number | Date) {
+export function FormatTimeSince(
+	date: string | number | Date,
+	removeSeconds: boolean
+) {
 	const time = Math.floor(
 		(new Date().valueOf() - new Date(date).valueOf()) / 1000
 	);
 	const { interval, unit } = calculateTimeDifference(time);
 	const suffix = interval === 1 ? "" : "s";
-	return `${interval} ${unit}${suffix} ago`;
+	return suffix === "s" && removeSeconds
+		? "Now"
+		: `${interval} ${unit}${suffix} ago`;
 }

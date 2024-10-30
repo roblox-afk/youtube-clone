@@ -1,14 +1,16 @@
-import { Menu, Search, Mic, Upload, Bell } from "lucide-react";
+import { Menu, Search, Mic } from "lucide-react";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import ProfileIconWidget from "./Icons/ProfileIconWidget";
+import UploadIconWidget from "./Icons/UploadIconWidget";
+import NotificationIconWidget from "./Icons/NotificationIconWidget";
 
 export default function NavBar() {
 	const t = useTranslations("Navbar");
 
 	return (
-		<div className="bg-black z-[1000] fixed top-0 left-0 right-0  flex h-14 px-4 items-center justify-between text-white">
+		<div className="bg-black z-[100] fixed top-0 left-0 right-0  flex h-14 px-4 items-center justify-between text-white">
 			<div className="flex">
 				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full">
 					<Menu color="#fff" />
@@ -51,15 +53,8 @@ export default function NavBar() {
 				</div>
 			</div>
 			<div className="flex items-center space-x-3">
-				<div className="size-10 hover:bg-neutral-800 rounded-full flex justify-center items-center">
-					<Upload strokeWidth={1} />
-				</div>
-				<div className="size-10 hover:bg-neutral-800 rounded-full flex relative justify-center items-center">
-					<Bell strokeWidth={1} className="" />
-					<span className="absolute top-0 right-[-4px] bg-red-600 rounded-full text-xs border h-4 w-7 flex justify-center items-center border-red-900">
-						99+
-					</span>
-				</div>
+				<UploadIconWidget />
+				<NotificationIconWidget />
 				<ProfileIconWidget />
 			</div>
 		</div>
