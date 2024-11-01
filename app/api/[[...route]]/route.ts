@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import images from "@/lib/images/route";
 import videos from "@/lib/videos/route";
+export const dynamic = "force-static";
 
 const app = new Hono().basePath("/api");
 
