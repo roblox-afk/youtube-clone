@@ -56,5 +56,11 @@
 			"help": "Hjelp",
 			"feedback": "Send tilbakemelding"
 		}
+	},
+	"Errors": {
+		"account_not_linked": {
+			"title": "Sosial account is not liked",
+			"description": "The sosial provider your trying to use is not linked to an account. Please create an account and link it."
+		}
 	}
 }

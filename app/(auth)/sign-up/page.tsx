@@ -1,6 +1,5 @@
 "use client";
 import { useTranslations } from "next-intl";
-import GoogleLogo from "@/public/Google_Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, LoaderCircle, UploadCloud } from "lucide-react";
@@ -118,16 +117,6 @@ export default function SignUpPage() {
 										<span className="w-[10%] text-center">Or</span>
 										<div className="bg-neutral-700 w-[45%] h-0.5 rounded-full" />
 									</div>
-									<div className="w-full flex justify-center">
-										<button className="rounded-full hover:scale-110 ease-in-out transition-all">
-											<Image
-												src={GoogleLogo}
-												alt="Google logo"
-												width={40}
-												height={40}
-											/>
-										</button>
-									</div>
 								</>
 							)}
 
@@ -137,7 +126,7 @@ export default function SignUpPage() {
 									<p>{t("onBoarding.subTitle")}</p>
 									<div className="mt-4 flex flex-col space-y-4 w-full">
 										<div className="flex w-full justify-center items-center">
-											<div className="flex justify-center items-center size-20 rounded-full bg-transparent border-neutral-700 border shadow-md shadow-neutral-600">
+											<div className="flex justify-center items-center size-20 rounded-full bg-transparent border-neutral-700 border shadow-md shadow-neutral-600 overflow-hidden">
 												{image == "" ? (
 													<>
 														<input
@@ -166,6 +155,7 @@ export default function SignUpPage() {
 															alt="profile picture"
 															width={80}
 															height={80}
+															className="rounded-full object-fill size-20"
 														/>
 													</>
 												)}

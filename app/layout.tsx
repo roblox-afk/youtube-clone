@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
+import ErrorProvider from "@/components/ErrorProvider";
 
 const roboto = Roboto({
 	weight: "400",
@@ -30,6 +31,7 @@ export default async function RootLayout({
 			<body className={cn("bg-black", roboto.className)}>
 				<Providers>
 					<NextIntlClientProvider messages={messages}>
+						<ErrorProvider />
 						{children}
 					</NextIntlClientProvider>
 				</Providers>
