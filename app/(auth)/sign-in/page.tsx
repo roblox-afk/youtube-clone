@@ -7,15 +7,13 @@ import { ChevronLeft } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@/lib/auth/auth-client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-
-const signInSchema = z.object({
-	email: z.string().email(),
-	password: z.string(),
-	rememberMe: z.boolean(),
-});
+import {
+	SignIn,
+	SignInSchema,
+	SignInWithSocial,
+} from "@/actions/auth/authForms";
 
 export default function SignInPage() {
 	const t = useTranslations("Auth.signIn");
@@ -24,42 +22,12 @@ export default function SignInPage() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<z.infer<typeof signInSchema>>({
-		resolver: zodResolver(signInSchema),
+	} = useForm<z.infer<typeof SignInSchema>>({
+		resolver: zodResolver(SignInSchema),
 		defaultValues: {
 			rememberMe: true,
 		},
 	});
-
-	async function onSubmit(values: z.infer<typeof signInSchema>) {
-		const { error } = await authClient.signIn.email({
-			email: values.email,
-			password: values.password,
-			dontRememberMe: values.rememberMe!,
-			callbackURL: "/",
-		});
-		console.log(error);
-	}
-
-	async function signinWithSocial(
-		provider:
-			| "apple"
-			| "discord"
-			| "facebook"
-			| "github"
-			| "microsoft"
-			| "google"
-			| "spotify"
-			| "twitch"
-			| "twitter"
-			| "dropbox"
-			| "linkedin"
-	) {
-		await authClient.signIn.social({
-			provider: provider,
-			callbackURL: "/",
-		});
-	}
 
 	return (
 		<div className="h-full w-full pt-10 flex flex-col px-5 relative">
@@ -73,7 +41,7 @@ export default function SignInPage() {
 			<h1 className="text-5xl">{t("title")}</h1>
 			<p>{t("subTitle")}</p>
 			<form
-				onSubmit={handleSubmit(onSubmit)}
+				onSubmit={handleSubmit(SignIn)}
 				className="mt-4 flex flex-col space-y-4 w-full"
 			>
 				<input
@@ -116,7 +84,7 @@ export default function SignInPage() {
 			<div className="w-full flex justify-center">
 				<button
 					className="rounded-full hover:scale-110 ease-in-out transition-all"
-					onClick={() => signinWithSocial("google")}
+					onClick={() => SignInWithSocial("google")}
 				>
 					<Image src={GoogleLogo} alt="Google logo" width={40} height={40} />
 				</button>

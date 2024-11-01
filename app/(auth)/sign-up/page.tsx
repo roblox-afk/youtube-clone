@@ -11,40 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useRef, useState } from "react";
 import axios from "axios";
-import { authClient } from "@/lib/auth/auth-client";
-
-const passwordSchema = z
-	.string()
-	.min(8, { message: "Password needs to be atleast 8 characters long." })
-	.refine((password) => /[A-Z]/.test(password), {
-		message: "Password needs to have atleast one uppercase letter.",
-	})
-	.refine((password) => /[a-z]/.test(password), {
-		message: "Password needs to have atleast one lowercase letter.",
-	})
-	.refine((password) => /[0-9]/.test(password), {
-		message: "Password needs to have atleast one number.",
-	})
-	.refine((password) => /[!@#$%^&*]/.test(password), {
-		message: "Password needs to have atleast one special character.",
-	});
-
-const signUpSchema = z
-	.object({
-		username: z
-			.string()
-			.min(2, {
-				message: "Username must be at least 2 characters.",
-			})
-			.max(70),
-		email: z.string().email(),
-		password: passwordSchema,
-		confirmPassword: z.string(),
-	})
-	.refine((data) => data.password == data.confirmPassword, {
-		message: "Passwords must match!",
-		path: ["confirmPassword"],
-	});
+import { SignUp, SignUpSchema } from "@/actions/auth/authForms";
 
 export default function SignUpPage() {
 	const t = useTranslations("Auth.signUp");
@@ -58,11 +25,15 @@ export default function SignUpPage() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<z.infer<typeof signUpSchema>>({
-		resolver: zodResolver(signUpSchema),
+	} = useForm<z.infer<typeof SignUpSchema>>({
+		resolver: zodResolver(SignUpSchema),
 	});
 
-	async function handleChange(e: ChangeEvent<HTMLInputElement>) {
+	function onSubmit(values: z.infer<typeof SignUpSchema>) {
+		SignUp(values, image);
+	}
+
+	async function handleImageInputChange(e: ChangeEvent<HTMLInputElement>) {
 		if (e.target.files == null || e.target.files.length == 0) return;
 		setLoadingImage(true);
 		await axios
@@ -82,19 +53,6 @@ export default function SignUpPage() {
 				setImage(response.data.secure_url);
 				setLoadingImage(false);
 			});
-	}
-
-	async function onSubmit(values: z.infer<typeof signUpSchema>) {
-		const { data, error } = await authClient.signUp.email({
-			email: values.email,
-			password: values.password,
-			name: values.username,
-			image: image,
-			slash: values.username.toLowerCase(),
-			callbackURL: "/",
-		});
-		console.log(data);
-		console.log(error);
 	}
 
 	return (
@@ -185,7 +143,7 @@ export default function SignUpPage() {
 														<input
 															ref={imageInput}
 															type="file"
-															onChange={handleChange}
+															onChange={handleImageInputChange}
 															className="hidden"
 														/>
 														{loadingImage ? (
