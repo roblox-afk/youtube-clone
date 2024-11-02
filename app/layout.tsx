@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
 import ErrorProvider from "@/components/ErrorProvider";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
 	weight: "400",
@@ -28,7 +29,7 @@ export default async function RootLayout({
 	const messages = await getMessages();
 
 	return (
-		<html lang={locale}>
+		<html lang={locale} suppressHydrationWarning>
 			<body className={cn("bg-black", roboto.className)}>
 				<Providers>
 					<NextIntlClientProvider messages={messages}>
@@ -36,6 +37,7 @@ export default async function RootLayout({
 							<ErrorProvider />
 						</Suspense>
 						{children}
+						<Toaster />
 					</NextIntlClientProvider>
 				</Providers>
 			</body>

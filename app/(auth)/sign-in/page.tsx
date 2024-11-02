@@ -9,11 +9,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
 import {
 	SignIn,
 	SignInSchema,
 	SignInWithSocial,
 } from "@/actions/auth/authForms";
+import { useCallback } from "react";
+import { toast } from "sonner";
 
 export default function SignInPage() {
 	const t = useTranslations("Auth.signIn");
@@ -29,6 +32,27 @@ export default function SignInPage() {
 		},
 	});
 
+	const mutation = useMutation({
+		mutationFn: SignIn,
+		onSuccess: () => {
+			toast.success("Signed In, Please wait while we redirect you!", {
+				id: "sign-in",
+			});
+		},
+		onError: (error: Error) => {
+			toast.error("Failed to sign in. Error: " + error.message, {
+				id: "sign-in",
+			});
+		},
+	});
+	const onSubmit = useCallback(
+		(values: z.infer<typeof SignInSchema>) => {
+			toast.loading("Signing in...", { id: "sign-in" });
+			mutation.mutate(values);
+		},
+		[mutation]
+	);
+
 	return (
 		<div className="h-full w-full pt-10 flex flex-col px-5 relative">
 			<Link
@@ -41,7 +65,7 @@ export default function SignInPage() {
 			<h1 className="text-5xl">{t("title")}</h1>
 			<p>{t("subTitle")}</p>
 			<form
-				onSubmit={handleSubmit(SignIn)}
+				onSubmit={handleSubmit(onSubmit)}
 				className="mt-4 flex flex-col space-y-4 w-full"
 			>
 				<input

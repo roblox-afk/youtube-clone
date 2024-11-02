@@ -78,7 +78,7 @@ export default function Home() {
 					isPublic: true,
 					isDraft: false,
 					comments: [],
-					createdAt: new Date(),
+					createdAt: new Date("2024-11-1"),
 					disLikes: 0,
 					likes: 0,
 				}}

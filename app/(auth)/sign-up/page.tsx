@@ -8,9 +8,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import axios from "axios";
 import { SignUp, SignUpSchema } from "@/actions/auth/authForms";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
 	const t = useTranslations("Auth.signUp");
@@ -28,9 +30,28 @@ export default function SignUpPage() {
 		resolver: zodResolver(SignUpSchema),
 	});
 
-	function onSubmit(values: z.infer<typeof SignUpSchema>) {
-		SignUp(values, image);
-	}
+	const mutation = useMutation({
+		mutationFn: (values: z.infer<typeof SignUpSchema>) => {
+			return SignUp(values, image);
+		},
+		onSuccess: () => {
+			toast.success("Signed Up, Please wait while we redirect you!", {
+				id: "sign-up",
+			});
+		},
+		onError: (error: Error) => {
+			toast.error("Failed to create account. Error: " + error.message, {
+				id: "sign-up",
+			});
+		},
+	});
+	const onSubmit = useCallback(
+		(values: z.infer<typeof SignUpSchema>) => {
+			toast.loading("Creating account...", { id: "sign-up" });
+			mutation.mutate(values);
+		},
+		[mutation]
+	);
 
 	async function handleImageInputChange(e: ChangeEvent<HTMLInputElement>) {
 		if (e.target.files == null || e.target.files.length == 0) return;
