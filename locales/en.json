@@ -15,6 +15,25 @@
 			"subTitle": "Glad you're back!"
 		}
 	},
+	"Studio": {
+		"Navbar": {
+			"searchPlaceholder": "Search across your channel",
+			"create": "Create"
+		},
+		"Sidebar": {
+			"yourChannel": "Your channel",
+			"dashboard": "Dashboard",
+			"content": "Content",
+			"analytics": "Analytics",
+			"comments": "Comments",
+			"subtitles": "Subtitles",
+			"customization": "Customization",
+			"misc": {
+				"settings": "Settings",
+				"feedback": "Send feedback"
+			}
+		}
+	},
 	"Navbar": {
 		"searchPlaceholder": "Search"
 	},
