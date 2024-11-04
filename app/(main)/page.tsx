@@ -2,7 +2,7 @@ import VideoCard from "@/components/navigation/VideoCard";
 
 export default function Home() {
 	return (
-		<div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full grid-rows-max">
+		<div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full grid-rows-max mt-6">
 			<VideoCard
 				channelData={{
 					name: "Todolo Do",

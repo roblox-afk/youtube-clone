@@ -80,6 +80,10 @@
 		"account_not_linked": {
 			"title": "Sosial account is not liked",
 			"description": "The sosial provider your trying to use is not linked to an account. Please create an account and link it."
+		},
+		"not_authenticated": {
+			"title": "Not Authenticated",
+			"description": "The page you are trying to access is protected. Please sign in to view this page."
 		}
 	}
 }

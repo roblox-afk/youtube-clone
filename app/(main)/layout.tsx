@@ -1,4 +1,5 @@
 import NavBar from "@/components/navigation/NavBar";
+import NavBarContent from "@/components/navigation/NavbarContent";
 import Sidebar from "@/components/navigation/Sidebar";
 import SidebarContent from "@/components/navigation/SidebarContent";
 
@@ -9,7 +10,9 @@ export default function MainPageLayout({
 }) {
 	return (
 		<div className="max-w-screen max-h-screen flex flex-col">
-			<NavBar />
+			<NavBar>
+				<NavBarContent />
+			</NavBar>
 			<Sidebar>
 				<SidebarContent />
 			</Sidebar>
