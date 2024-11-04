@@ -57,7 +57,7 @@ export async function SignUp(
 	values: z.infer<typeof SignUpSchema>,
 	imageUrl: string
 ) {
-	const { data, error } = await authClient.signUp.email({
+	const { error } = await authClient.signUp.email({
 		email: values.email,
 		password: values.password,
 		name: values.username,
@@ -65,8 +65,9 @@ export async function SignUp(
 		slash: values.username.toLowerCase(),
 		callbackURL: "/",
 	});
-	console.log(data);
-	console.log(error);
+	if (error) {
+		throw new Error(error.message);
+	}
 }
 
 export async function SignIn(values: z.infer<typeof SignInSchema>) {
@@ -76,7 +77,9 @@ export async function SignIn(values: z.infer<typeof SignInSchema>) {
 		dontRememberMe: values.rememberMe!,
 		callbackURL: "/",
 	});
-	console.log(error);
+	if (error) {
+		throw new Error(error.message);
+	}
 }
 
 export async function SignInWithSocial(provider: Provider) {
