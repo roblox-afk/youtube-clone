@@ -30,7 +30,7 @@ export default async function RootLayout({
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body className={cn("bg-black", roboto.className)}>
+			<body className={cn("bg-transparent", roboto.className)}>
 				<Providers>
 					<NextIntlClientProvider messages={messages}>
 						<Suspense>

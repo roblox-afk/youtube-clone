@@ -32,6 +32,17 @@
 				"settings": "Settings",
 				"feedback": "Send feedback"
 			}
+		},
+		"Content": {
+			"Videos": {
+				"title": "Videos"
+			},
+			"Posts": {
+				"title": "Posts"
+			},
+			"Playlists": {
+				"title": "Playlists"
+			}
 		}
 	},
 	"Navbar": {

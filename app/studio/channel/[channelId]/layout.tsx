@@ -26,7 +26,7 @@ export default function StudioLayout({
 	const { data: session, isPending, error } = authClient.useSession();
 	const router = useRouter();
 	const [settingsOpen, setSettingsOpen] = useState(
-		searchParams.has("settingsOpen")
+		searchParams.has("settingsOpen") ?? false
 	);
 	if (error) {
 		toast.error("Error: " + error.message);
@@ -35,18 +35,15 @@ export default function StudioLayout({
 		(!session && !isPending) ||
 		(!isPending && session?.user.id != unpackedParams.channelId)
 	) {
-		return router.push("/?error=not_authenticated");
+		return router.replace("/?error=not_authenticated");
 	}
 
 	return (
-		<div
-			className="max-w-screen max-h-screen flex flex-col"
-			suppressHydrationWarning
-		>
-			<NavBar>
+		<div className="max-w-screen h-screen flex flex-col bg-neutral-800">
+			<NavBar backdrop>
 				<StudioNavbarContent />
 			</NavBar>
-			<Sidebar>
+			<Sidebar className="border-r border-neutral-700">
 				<StudioSidebarContent />
 			</Sidebar>
 			<main className="relative flex h-full flex-row ml-64 mt-14">

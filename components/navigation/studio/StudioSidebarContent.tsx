@@ -23,7 +23,7 @@ export default function StudioSidebarContent() {
 	const { data: session, isPending } = authClient.useSession();
 	if (!session && isPending) return <div>Loading User</div>;
 	return (
-		<div className="relative h-full">
+		<div className="h-full w-full pt-4">
 			<div className="px-3 space-y-3 w-full flex items-center flex-col mb-3">
 				<Image
 					src={session?.user.image ?? Placeholder40x40}
@@ -63,7 +63,7 @@ export default function StudioSidebarContent() {
 				/>
 				<SidebarItem
 					Icon={MessageSquareText}
-					label={t("analytics")}
+					label={t("comments")}
 					path={"/studio/channel/" + session?.user.id + "/comments"}
 					currentPath={pathname}
 					textClassName="font-medium text-base"
@@ -83,7 +83,7 @@ export default function StudioSidebarContent() {
 					textClassName="font-medium text-base"
 				/>
 			</div>
-			<div className="px-3 space-y-1 w-full flex absolute bottom-20 flex-col">
+			<div className="px-3 space-y-1 w-full mt-20">
 				<SidebarItem
 					Icon={Settings}
 					label={t("misc.settings")}
