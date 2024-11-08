@@ -4,6 +4,7 @@ import {
 	ChartColumn,
 	LayoutDashboard,
 	ListVideo,
+	LoaderCircle,
 	MessageSquareText,
 	MessageSquareWarning,
 	Settings,
@@ -21,7 +22,12 @@ export default function StudioSidebarContent() {
 	const t = useTranslations("Studio.Sidebar");
 	const pathname: string = usePathname();
 	const { data: session, isPending } = authClient.useSession();
-	if (!session && isPending) return <div>Loading User</div>;
+	if (!session && isPending)
+		return (
+			<div className="flex w-full h-full justify-center items-center">
+				<LoaderCircle width={64} height={64} className="size-16" />
+			</div>
+		);
 	return (
 		<div className="h-full w-full pt-4">
 			<div className="px-3 space-y-3 w-full flex items-center flex-col mb-3">

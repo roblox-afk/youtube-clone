@@ -21,6 +21,15 @@ const nextConfig = {
 			},
 		],
 	},
+	redirects: async () => {
+		return [
+			{
+				source: "/studio/channel",
+				destination: "/studio",
+				permanent: true,
+			},
+		];
+	},
 };
 
 export default withNextIntl(nextConfig);
