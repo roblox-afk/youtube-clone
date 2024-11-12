@@ -1,6 +1,6 @@
 "use client";
 import { getVideo } from "@/actions/content/videos";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -10,25 +10,33 @@ export default function WatchVideoPage() {
 	const searchParams = useSearchParams();
 	const id = searchParams.get("id");
 	const router = useRouter();
-	const videoData = useMutation({
-		mutationFn: () => {
-			return getVideo(id ?? "");
-		},
+	const { isPending, data: videoData } = useQuery({
+		queryKey: [id],
+		queryFn: () => getVideo(id ?? ""),
 	});
 
 	useEffect(() => {
 		if (id == null || id === "") router.push("/");
-		if (!videoData.isPending && videoData.data == null) {
+		if (!isPending && videoData == null) {
 			toast.error("Invalid video id");
 			router.push("/");
 		}
-	}, [id, router, videoData]);
+	}, [id, router, videoData, isPending]);
+
 	return (
 		<div>
-			{videoData.isPending || videoData.data == null ? (
-				<Loader2 className="animate-spin" />
+			{isPending || videoData == null ? (
+				<>
+					<Loader2 className="animate-spin" />
+				</>
 			) : (
-				<p>{videoData.data.title}</p>
+				<>
+					<video width="320" height="240" controls preload="none">
+						<source src={videoData.sourceUrl} type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
+					<p>{videoData.title}</p>
+				</>
 			)}
 		</div>
 	);

@@ -68,5 +68,3 @@ export const auth = betterAuth({
 	},
 	plugins: [multiSession()],
 });
-
-export type User = typeof auth.$Infer.Session.user;

@@ -33,6 +33,7 @@ export default function UploadVideoDialog() {
 		}
 		const results = await uploadVideo(
 			await e.target.files[0].arrayBuffer(),
+			e.target.files[0].name,
 			session.data.user.id
 		);
 

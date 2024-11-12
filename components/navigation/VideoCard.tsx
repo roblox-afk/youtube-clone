@@ -2,11 +2,10 @@
 import Image from "next/image";
 import PlaceholderProfilePicture from "@/public/Placeholder_40x40.svg";
 import { Label } from "../ui/label";
-import { Video } from "@/lib/db/schema";
+import { User, Video } from "@/lib/db/schema";
 import { FormatTimeSince } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { User } from "@/lib/auth/auth";
 
 export default function VideoCard({
 	data,
@@ -56,7 +55,7 @@ export default function VideoCard({
 							{new Intl.NumberFormat("en-US", {
 								compactDisplay: "short",
 								notation: "compact",
-							}).format(data.views)}
+							}).format(data.views)}{" "}
 							views
 						</Label>
 						<div className="rounded-full size-1 bg-white mx-2" />

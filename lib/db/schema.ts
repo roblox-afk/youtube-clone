@@ -14,7 +14,7 @@ export const users = pgTable("users", {
 	name: varchar({ length: 255 }).notNull(),
 	email: varchar({ length: 255 }).notNull(),
 	emailVerified: boolean().notNull(),
-	image: varchar(),
+	image: varchar().notNull(),
 	createdAt: timestamp().defaultNow().notNull(),
 	updatedAt: timestamp().notNull(),
 
@@ -26,6 +26,8 @@ export const users = pgTable("users", {
 	posts: text().array().notNull(),
 	subscribers: integer().default(0),
 });
+
+export type User = typeof users.$inferSelect;
 
 export const sessions = pgTable("sessions", {
 	id: varchar().primaryKey().notNull(),
