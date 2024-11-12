@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { LucideProps } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 export default function SidebarItem({
 	Icon,
@@ -12,6 +13,7 @@ export default function SidebarItem({
 	reversed = false,
 	className = "",
 	textClassName = "",
+	onClick,
 }: {
 	Icon?: React.FC<LucideProps>;
 	ImagePath?: string;
@@ -21,12 +23,20 @@ export default function SidebarItem({
 	reversed?: boolean;
 	className?: string;
 	textClassName?: string;
+	onClick?: () => void;
 }) {
+	const router = useRouter();
 	return (
-		<Link
-			href={path}
+		<Button
+			onClick={() => {
+				if (onClick == null) {
+					router.push(path);
+				} else {
+					onClick();
+				}
+			}}
 			className={cn(
-				"w-full flex px-4 h-10 bg-neutral-800 hover:bg-neutral-700 items-center rounded-xl",
+				"w-full flex px-4 h-10 bg-neutral-800 hover:bg-neutral-700 items-center rounded-xl shadow-none justify-normal",
 				currentPath != path && "bg-transparent",
 				className
 			)}
@@ -72,6 +82,6 @@ export default function SidebarItem({
 					height={24}
 				/>
 			)}
-		</Link>
+		</Button>
 	);
 }

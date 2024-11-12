@@ -1,21 +1,64 @@
 "use client";
 import { MotionDiv } from "@/components/motion";
 import StudioContentFilterBar from "@/components/navigation/studio/StudioContentFilterBar";
+import { DataTable } from "@/components/ui/data-table";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { videoColumns } from "./columns";
+import { Video } from "@/lib/db/schema";
+import { getVideos } from "@/actions/content/videos";
 
-export default function StudioContentPage() {
+export default function StudioContentPage({
+	params,
+}: {
+	params: Promise<{ channelId: string }>;
+}) {
 	const t = useTranslations("Studio.Content");
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
+	const channelId = use(params).channelId;
 	const queryTab = searchParams.get("tab") ?? "videos";
 	const [activeTab, setActiveTab] = useState(
 		searchParams.get("tab") ?? "videos"
 	);
+
+	const [videos, setVideos] = useState<Video[]>();
+	// [
+	// 	{
+	// 		id: "sdwas",
+	// 		title: "bob",
+	// 		description: "testes",
+	// 		visibility: VideoStatus.DRAFT,
+	// 		restrictions: VideoRestrictions.NONE,
+	// 		thumbnailUrl:
+	// 			"https://res.cloudinary.com/dafd64b6r/image/upload/v1730146068/youtube-clone/hbtmsrqyczlxefj6pfyw.jpg",
+	// 		views: 10,
+	// 		likes: 20,
+	// 		disLikes: 10,
+	// 		comments: ["test", "test"],
+	// 		sourceUrl: "test",
+	// 		createdAt: new Date("2024-10-11"),
+	// 	},
+	// 	{
+	// 		id: "sdwas",
+	// 		title: "23212",
+	// 		description: "testes",
+	// 		visibility: VideoStatus.DRAFT,
+	// 		restrictions: VideoRestrictions.NONE,
+	// 		thumbnailUrl:
+	// 			"https://res.cloudinary.com/dafd64b6r/image/upload/v1730146068/youtube-clone/hbtmsrqyczlxefj6pfyw.jpg",
+	// 		views: 10,
+	// 		likes: 20,
+	// 		disLikes: 10,
+	// 		comments: ["test", "test"],
+	// 		sourceUrl: "test",
+	// 		createdAt: new Date("2024-10-11"),
+	// 	},
+	// ];
 
 	const onTabChange = (newState: string) => {
 		setActiveTab(newState);
@@ -25,8 +68,14 @@ export default function StudioContentPage() {
 	};
 
 	useEffect(() => {
+		async function getData() {
+			const result = await getVideos(channelId);
+			setVideos(result);
+		}
+		getData();
+
 		setActiveTab(queryTab);
-	}, [queryTab]);
+	}, [queryTab, videos, channelId]);
 
 	return (
 		<div className="w-full h-full">
@@ -78,6 +127,7 @@ export default function StudioContentPage() {
 				</TabsList>
 				<TabsContent value="videos">
 					<StudioContentFilterBar />
+					<DataTable columns={videoColumns} data={videos ?? []} />
 				</TabsContent>
 				<TabsContent value="posts">
 					<StudioContentFilterBar />

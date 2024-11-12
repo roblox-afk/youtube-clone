@@ -27,7 +27,9 @@ export default function UploadIconWidget() {
 							className="flex items-center px-4  flex-row h-10 hover:bg-neutral-700 relative w-full"
 							onClick={() =>
 								router.push(
-									"/studio/channel/" + session.user.id + "/content/upload"
+									"/studio/channel/" +
+										session.user.id +
+										"/content?action=upload"
 								)
 							}
 						>
@@ -38,7 +40,7 @@ export default function UploadIconWidget() {
 							className="flex items-center px-4  flex-row h-10 hover:bg-neutral-700 relative w-full"
 							onClick={() =>
 								router.push(
-									"/studio/channel/" + session.user.id + "/content/post"
+									"/studio/channel/" + session.user.id + "/content?action=post"
 								)
 							}
 						>

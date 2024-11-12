@@ -21,6 +21,11 @@ const nextConfig = {
 			},
 		],
 	},
+	experimental: {
+		serverActions: {
+			bodySizeLimit: "2000mb",
+		},
+	},
 	redirects: async () => {
 		return [
 			{

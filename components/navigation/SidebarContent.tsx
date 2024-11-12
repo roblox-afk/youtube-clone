@@ -179,7 +179,7 @@ export default function Sidebar() {
 				/>
 			</div>
 			<div className="w-full my-3 h-[1px] bg-neutral-800" />
-			<div className="px-3 pb-5 space-y-1 w-full">
+			<div className="px-3 pb-16 space-y-1 w-full">
 				<SidebarItem
 					Icon={Settings}
 					label={t("misc.settings")}

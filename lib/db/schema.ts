@@ -6,6 +6,7 @@ import {
 	timestamp,
 	varchar,
 	integer,
+	pgEnum,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -52,14 +53,37 @@ export const verifications = pgTable("verifications", {
 	expiresAt: timestamp().notNull(),
 });
 
+export enum VideoStatus {
+	PRIVATE = "private",
+	PUBLIC = "public",
+	DRAFT = "draft",
+}
+export enum VideoRestrictions {
+	KIDS = "made for kids",
+	NONE = "none",
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function enumToPgEnum<T extends Record<string, any>>(
+	myEnum: T
+): [T[keyof T], ...T[keyof T][]] {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return Object.values(myEnum).map((value: any) => `${value}`) as any;
+}
+
+export const visibilityEnum = pgEnum("visibility", enumToPgEnum(VideoStatus));
+export const restrictionsEnum = pgEnum(
+	"restrictions",
+	enumToPgEnum(VideoRestrictions)
+);
+
 export const videos = pgTable("videos", {
 	id: text().primaryKey().notNull(),
+	channelId: text().notNull(),
 	thumbnailUrl: varchar().default("").notNull(),
 	sourceUrl: varchar().notNull(),
 	title: text().notNull(),
 	description: text().default("").notNull(),
-	isPublic: boolean().default(false).notNull(),
-	isDraft: boolean().default(true).notNull(),
+	visibility: visibilityEnum(),
 	comments: text()
 		.array()
 		.notNull()
@@ -67,6 +91,7 @@ export const videos = pgTable("videos", {
 	likes: integer().default(0).notNull(),
 	disLikes: integer().default(0).notNull(),
 	views: integer().default(0).notNull(),
+	restrictions: restrictionsEnum(),
 	createdAt: timestamp().defaultNow().notNull(),
 });
 

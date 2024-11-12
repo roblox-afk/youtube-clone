@@ -3,10 +3,10 @@ import Image from "next/image";
 import PlaceholderProfilePicture from "@/public/Placeholder_40x40.svg";
 import { Label } from "../ui/label";
 import { Video } from "@/lib/db/schema";
-import { User } from "better-auth";
 import { FormatTimeSince } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { User } from "@/lib/auth/auth";
 
 export default function VideoCard({
 	data,

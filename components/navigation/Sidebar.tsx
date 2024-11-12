@@ -10,7 +10,7 @@ export default function Sidebar({
 	return (
 		<div
 			className={cn(
-				"fixed top-14 bg-transparent flex w-64 h-full grow overflow-auto scrollbar-none hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-600 scrollbar-thumb-rounded-full",
+				"fixed top-14 pb-14 bg-transparent flex w-64 h-full grow overflow-auto scrollbar-none hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-600 scrollbar-thumb-rounded-full",
 				className
 			)}
 		>

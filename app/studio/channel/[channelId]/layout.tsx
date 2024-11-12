@@ -1,18 +1,22 @@
 "use client";
 import NavBar from "@/components/navigation/NavBar";
 import Sidebar from "@/components/navigation/Sidebar";
+import CreatePostDialog from "@/components/navigation/studio/dialogs/CreatePostDialog";
+import FeedbackDialog from "@/components/navigation/studio/dialogs/FeedbackDialog";
+import SettingsDialog from "@/components/navigation/studio/dialogs/SettingsDialog";
+import UploadVideoDialog from "@/components/navigation/studio/dialogs/UploadVideoDialog";
 import StudioNavbarContent from "@/components/navigation/studio/StudioNavbarContent";
-import StudioSidebarContent from "@/components/navigation/studio/StudioSidebarContent";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth/auth-client";
-import { useRouter, useSearchParams } from "next/navigation";
-import { use, useState } from "react";
+import dynamic from "next/dynamic";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
+
+const StudioSidebarContent = dynamic(
+	() => import("@/components/navigation/studio/StudioSidebarContent"),
+	{ ssr: false }
+);
 
 export default function StudioLayout({
 	children,
@@ -23,38 +27,61 @@ export default function StudioLayout({
 }) {
 	const unpackedParams = use(params);
 	const searchParams = useSearchParams();
+	const pathname = usePathname();
 	const { data: session, isPending, error } = authClient.useSession();
 	const router = useRouter();
-	const [settingsOpen, setSettingsOpen] = useState(
-		searchParams.has("settingsOpen") ?? false
+	const [dialogOpen, setDialogOpen] = useState(
+		searchParams.has("action") && searchParams.get("action") != ""
+			? true
+			: false
 	);
+	const [dialogType] = useState(searchParams.get("action") ?? "");
 	if (error) {
 		toast.error("Error: " + error.message);
 	}
-	if (
-		(!session && !isPending) ||
-		(!isPending && session?.user.id != unpackedParams.channelId)
-	) {
-		return router.replace("/?error=not_authenticated");
+	useEffect(() => {
+		if (
+			(!session && !isPending) ||
+			(!isPending && session?.user.id != unpackedParams.channelId)
+		) {
+			router.push("/?error=not_authenticated");
+		}
+
+		setDialogOpen(dialogType !== "");
+	}, [isPending, router, session, unpackedParams, dialogType]);
+
+	function changeDialogType(newType: string) {
+		const newParams = new URLSearchParams(searchParams.toString());
+		if (newType === "") {
+			newParams.delete("action");
+		} else {
+			newParams.set("action", newType);
+		}
+		router.push(pathname + "?" + newParams.toString());
 	}
 
 	return (
 		<div className="max-w-screen h-screen flex flex-col bg-neutral-800">
-			<NavBar backdrop>
+			<NavBar backdrop className="h-16">
 				<StudioNavbarContent />
 			</NavBar>
-			<Sidebar className="border-r border-neutral-700">
-				<StudioSidebarContent />
+			<Sidebar className="border-r border-neutral-700 top-16 pb-16">
+				<StudioSidebarContent changeDialogType={changeDialogType} />
 			</Sidebar>
 			<main className="relative flex h-full flex-row ml-64 mt-14">
 				{children}
 			</main>
-			<Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Settings</DialogTitle>
-					</DialogHeader>
-				</DialogContent>
+			<Dialog
+				open={dialogOpen}
+				onOpenChange={(newState: boolean) => {
+					setDialogOpen(newState);
+					if (newState == false) changeDialogType("");
+				}}
+			>
+				{dialogType === "upload" ? <UploadVideoDialog /> : <></>}
+				{dialogType === "post" ? <CreatePostDialog /> : <></>}
+				{dialogType === "settings" ? <SettingsDialog /> : <></>}
+				{dialogType === "feedback" ? <FeedbackDialog /> : <></>}
 			</Dialog>
 		</div>
 	);

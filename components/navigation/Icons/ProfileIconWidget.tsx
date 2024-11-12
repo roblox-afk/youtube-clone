@@ -7,13 +7,20 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { authClient } from "@/lib/auth/auth-client";
+import { cn } from "@/lib/utils";
 import { ChevronRight, LoaderCircle, LogOut, User, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 
-export default function ProfileIconWidget() {
+export default function ProfileIconWidget({
+	size = 40,
+	className,
+}: {
+	className?: string;
+	size?: number;
+}) {
 	const router = useRouter();
 	const { data: session } = authClient.useSession();
 	return (
@@ -26,7 +33,11 @@ export default function ProfileIconWidget() {
 				<Popover>
 					<PopoverTrigger asChild>
 						<button
-							className="size-10 flex justify-center items-center hover:bg-neutral-800 rounded-full my-1 mx-7"
+							className={cn(
+								"flex justify-center items-center hover:bg-neutral-800 rounded-full my-1 mx-7",
+								"size-[" + size + "px]",
+								className
+							)}
 							onClick={() =>
 								session?.user == null ? router.push("/sign-in") : {}
 							}
@@ -34,11 +45,14 @@ export default function ProfileIconWidget() {
 						>
 							{session.user.image != null ? (
 								<Image
-									className="rounded-full object-fill size-10"
+									className={cn(
+										"rounded-full object-fill",
+										"size-[" + size + "px]"
+									)}
 									src={session.user.image}
 									alt="profile picture"
-									width={40}
-									height={40}
+									width={size}
+									height={size}
 								/>
 							) : (
 								<User strokeWidth={1} />

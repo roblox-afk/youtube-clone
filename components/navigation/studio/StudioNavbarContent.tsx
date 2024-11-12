@@ -1,34 +1,28 @@
 import { Menu, Search, Mic } from "lucide-react";
-import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
+import YoutubeStudioImageWhite from "@/public/YouTubeStudio_Logo_White.svg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import {
-	NotificationIconWidget,
-	UploadIconWidget,
-	ProfileIconWidget,
-} from "../Icons";
+import { UploadIconWidget, ProfileIconWidget } from "../Icons";
+import Link from "next/link";
 
 export default function StudioNavbarContent() {
 	const t = useTranslations("Navbar");
 
 	return (
-		<>
+		<div className="flex py-[10px] pl-4 pr-6 w-full h-full justify-between">
 			<div className="flex">
-				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full">
+				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 rounded-full flex h-full border-2 border-transparent p-2 mr-4">
 					<Menu color="#fff" />
 				</button>
-				<a className="flex" href="">
+				<Link className="flex pt-2 mr-24" href="/">
 					<Image
-						className="ml-4 fill-white"
-						src={YoutubeImageLight}
+						className="fill-white"
+						src={YoutubeStudioImageWhite}
 						alt="test"
-						width={90}
-						height={20}
+						width={97}
+						height={24}
 					/>
-					<span className="text-[10px] ml-1 mt-1 text-[#AAAAAA] font-semibold font-sans">
-						NO
-					</span>
-				</a>
+				</Link>
 			</div>
 			<div className="sm:flex h-10 items-center hidden">
 				<div className="h-full ml-8 pl-2 bg-stone-950 border-neutral-700 float-start border has-[:focus]:border-blue-400 has-[:focus]:ml-0 rounded-l-full items-center flex flex-row-reverse left-2">
@@ -56,9 +50,8 @@ export default function StudioNavbarContent() {
 			</div>
 			<div className="flex items-center space-x-3">
 				<UploadIconWidget />
-				<NotificationIconWidget />
-				<ProfileIconWidget />
+				<ProfileIconWidget size={32} className="m-0" />
 			</div>
-		</>
+		</div>
 	);
 }

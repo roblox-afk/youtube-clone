@@ -10,7 +10,7 @@ export default function MainPageLayout({
 }) {
 	return (
 		<div className="max-w-screen max-h-screen flex flex-col">
-			<NavBar>
+			<NavBar className="px-4 h-14">
 				<NavBarContent />
 			</NavBar>
 			<Sidebar>
