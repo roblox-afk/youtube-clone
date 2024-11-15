@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
 const timeUnits = [
@@ -43,4 +44,23 @@ export function FormatTimeSince(
 	return suffix === "s" && removeSeconds
 		? "Now"
 		: `${interval} ${unit}${suffix} ago`;
+}
+
+export function useMediaQuery(query: string) {
+	"use client";
+	const [matches, setMatches] = React.useState(false);
+
+	React.useEffect(() => {
+		const matchQueryList = window.matchMedia(query);
+		function handleChange(e: { matches: boolean }) {
+			setMatches(e.matches);
+		}
+		matchQueryList.addEventListener("change", handleChange);
+
+		return () => {
+			matchQueryList.removeEventListener("change", handleChange);
+		};
+	}, [query]);
+
+	return matches;
 }

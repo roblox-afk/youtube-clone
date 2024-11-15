@@ -1,3 +1,4 @@
+"use client";
 import { Menu, Search, Mic } from "lucide-react";
 import YoutubeImageLight from "@/public/YouTube_Logo_White.svg";
 import Image from "next/image";
@@ -7,14 +8,20 @@ import {
 	UploadIconWidget,
 	ProfileIconWidget,
 } from "./Icons";
+import { useSidebarStore } from "../providers/sidebarStateProvider";
 
 export default function NavBarContent() {
 	const t = useTranslations("Navbar");
 
+	const { toggle } = useSidebarStore((state) => state);
+
 	return (
 		<>
 			<div className="flex">
-				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full">
+				<button
+					className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full"
+					onClick={() => toggle()}
+				>
 					<Menu color="#fff" />
 				</button>
 				<a className="flex" href="">
