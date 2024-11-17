@@ -1,5 +1,6 @@
 "use client";
 import { getVideo } from "@/actions/content/videos";
+import VideoPlayer from "@/components/VideoPlayer";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,10 +32,7 @@ export default function WatchVideoPage() {
 				</>
 			) : (
 				<>
-					<video width="320" height="240" controls preload="none">
-						<source src={videoData.sourceUrl} type="video/mp4" />
-						Your browser does not support the video tag.
-					</video>
+					<VideoPlayer videoData={videoData} />
 					<p>{videoData.title}</p>
 				</>
 			)}

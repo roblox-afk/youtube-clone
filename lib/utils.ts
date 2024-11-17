@@ -46,6 +46,17 @@ export function FormatTimeSince(
 		: `${interval} ${unit}${suffix} ago`;
 }
 
+export function FormatTimeFromSeconds(secs: number): string {
+	const hours = Math.floor(secs / 3600);
+	const minutes = Math.floor(secs / 60) % 60;
+	const seconds = secs % 60;
+
+	return [hours, minutes, seconds]
+		.map((v) => (v < 10 ? "0" + v : v))
+		.filter((v, i) => v !== "00" || i > 0)
+		.join(":");
+}
+
 export function useMediaQuery(query: string) {
 	"use client";
 	const [matches, setMatches] = React.useState(false);
