@@ -3,6 +3,7 @@ import { cn, FormatTimeFromSeconds } from "@/lib/utils";
 import {
 	Pause,
 	Play,
+	RotateCcw,
 	SkipBack,
 	SkipForward,
 	Volume1,
@@ -62,9 +63,9 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 	}, [isPlaying, videoDuration, videoProgress]);
 
 	return (
-		<div className="relative w-full ">
+		<div className="relative w-full">
 			<video
-				className="rounded-sm flex peer"
+				className="rounded-sm flex peer w-full"
 				ref={videoRef}
 				muted={isMuted}
 				onLoadedMetadata={() =>
@@ -84,7 +85,11 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 				<div className="w-full h-[5px] items-center flex space-x-[2px]">
 					<div
 						className="h-[3px] hover:h-full bg-neutral-500"
-						style={{ width: (4 / Math.floor(videoDuration)) * 100 + "%" }}
+						style={{
+							width:
+								(Math.floor(videoDuration) / Math.floor(videoDuration)) * 100 +
+								"%",
+						}}
 					>
 						<div
 							className="bg-red-600 h-full"
@@ -111,6 +116,8 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 						>
 							{isPlaying ? (
 								<Pause className="size-4" />
+							) : videoProgress == videoDuration ? (
+								<RotateCcw className="size-4" />
 							) : (
 								<Play className="size-4" />
 							)}
