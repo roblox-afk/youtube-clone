@@ -43,9 +43,21 @@ export const auth = betterAuth({
 				input: false,
 			},
 			subscribers: {
-				type: "number",
+				type: "string[]",
 				required: false,
-				defaultValue: 0,
+				defaultValue: [],
+				input: false,
+			},
+			likedVideos: {
+				type: "string[]",
+				required: false,
+				defaultValue: [],
+				input: false,
+			},
+			disLikedVideos: {
+				type: "string[]",
+				required: false,
+				defaultValue: [],
 				input: false,
 			},
 		},

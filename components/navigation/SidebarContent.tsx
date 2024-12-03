@@ -29,16 +29,14 @@ import { usePathname } from "next/navigation";
 import ChannelPage from "./ChannelStatus";
 import { useTranslations } from "next-intl";
 import { useSidebarStore } from "../providers/sidebarStateProvider";
+import { authClient } from "@/lib/auth/auth-client";
 
 export default function Sidebar() {
 	const t = useTranslations("Sidebar");
 	const pathname: string = usePathname();
-	const userData: { id: string; username: string } = {
-		id: "123Abc",
-		username: "johndoe",
-	}; // TODO: replace with data from database
 
 	const { expanded } = useSidebarStore((state) => state);
+	const { data: session } = authClient.useSession();
 	return (
 		<>
 			{expanded == true ? (
@@ -82,7 +80,7 @@ export default function Sidebar() {
 						<SidebarItem
 							Icon={SquarePlay}
 							label={t("you.videos")}
-							path={"/channel/" + userData.id + "/videos"}
+							path={"/channel/" + session?.user.id + "/videos"}
 							currentPath={pathname}
 						/>
 						<SidebarItem
@@ -234,6 +232,7 @@ export default function Sidebar() {
 						path="/feed/you"
 						currentPath={pathname}
 						reversed
+						minimized
 						textClassName="font-medium text-base"
 					/>
 				</div>

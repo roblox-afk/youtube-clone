@@ -24,7 +24,9 @@ export const users = pgTable("users", {
 	bannerImage: varchar(),
 	videos: text().array().notNull(),
 	posts: text().array().notNull(),
-	subscribers: integer().default(0),
+	subscribers: varchar().array().notNull().default([]),
+	likedVideos: varchar().array().notNull().default([]),
+	disLikedVideos: varchar().array().notNull().default([]),
 });
 
 export type User = typeof users.$inferSelect;
@@ -116,6 +118,7 @@ export const posts = pgTable("posts", {
 
 export const comments = pgTable("comments", {
 	id: text().primaryKey(),
+	creator: varchar().references(() => users.id),
 	content: text().notNull(),
 	likes: integer().default(0),
 	disLikes: integer().default(0),

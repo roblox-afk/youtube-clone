@@ -6,23 +6,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import Placeholder40x40 from "@/public/Placeholder_40x40.svg";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-// export type Video2 = {
-// 	id: string;
-// 	thumbnailUrl: string;
-// 	sourceUrl: string;
-// 	title: string;
-// 	description: string;
-// 	visiblity: VideoStatus;
-// 	restrictions: VideoRestrictions;
-// 	comments: string[];
-// 	likes: number;
-// 	dislikes: number;
-// 	views: number;
-// 	createdAt: Date;
-// };
-
 export const videoColumns: ColumnDef<Video>[] = [
 	{
 		id: "select",
@@ -101,5 +84,22 @@ export const videoColumns: ColumnDef<Video>[] = [
 	{
 		accessorKey: "likes",
 		header: "Likes (vs. dislikes)",
+		cell: ({ row }) => {
+			if (row.original.likes == 0 && row.original.disLikes) {
+				return "50%";
+			}
+
+			if (row.original.likes == 0 || row.original.disLikes == 0) {
+				return "100%";
+			}
+
+			const prosent = (row.original.likes / row.original.disLikes) * 100;
+
+			if (prosent > 100) {
+				return "100%";
+			} else {
+				return prosent + "%";
+			}
+		},
 	},
 ];

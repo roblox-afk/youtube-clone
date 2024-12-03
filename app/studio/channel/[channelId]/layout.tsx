@@ -6,8 +6,10 @@ import FeedbackDialog from "@/components/navigation/studio/dialogs/FeedbackDialo
 import SettingsDialog from "@/components/navigation/studio/dialogs/SettingsDialog";
 import UploadVideoDialog from "@/components/navigation/studio/dialogs/UploadVideoDialog";
 import StudioNavbarContent from "@/components/navigation/studio/StudioNavbarContent";
+import { useSidebarStore } from "@/components/providers/sidebarStateProvider";
 import { Dialog } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth/auth-client";
+import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { use, useEffect, useState } from "react";
@@ -36,6 +38,7 @@ export default function StudioLayout({
 			: false
 	);
 	const [dialogType] = useState(searchParams.get("action") ?? "");
+	const { expanded } = useSidebarStore((state) => state);
 	if (error) {
 		toast.error("Error: " + error.message);
 	}
@@ -68,7 +71,12 @@ export default function StudioLayout({
 			<Sidebar className="border-r border-neutral-700 top-16 pb-16">
 				<StudioSidebarContent changeDialogType={changeDialogType} />
 			</Sidebar>
-			<main className="relative flex h-full flex-row ml-64 mt-14">
+			<main
+				className={cn(
+					"relative flex h-full flex-row mt-14",
+					expanded ? "ml-64" : "ml-[72px]"
+				)}
+			>
 				{children}
 			</main>
 			<Dialog

@@ -1,6 +1,7 @@
 import { getChannel } from "@/actions/content/channel";
 import { getAllVideos } from "@/actions/content/videos";
 import VideoCard from "@/components/navigation/VideoCard";
+import { VideoStatus } from "@/lib/db/schema";
 
 export default async function Home() {
 	const videos = await getAllVideos();
@@ -9,6 +10,7 @@ export default async function Home() {
 			{...videos?.map(async (video) => {
 				const channelData = await getChannel(video.channelId);
 				if (channelData == null) return;
+				if (video.visibility !== VideoStatus.PUBLIC) return;
 				return (
 					<VideoCard key={video.id} data={video} channelData={channelData} />
 				);

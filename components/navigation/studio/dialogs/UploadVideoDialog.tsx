@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 export default function UploadVideoDialog() {
 	const videoInput = useRef<HTMLInputElement>(null);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [video, setVideo] = useState<string>("");
 	const [loadingVideo, setLoadingVideo] = useState<boolean>(false);
 	const session = authClient.useSession();

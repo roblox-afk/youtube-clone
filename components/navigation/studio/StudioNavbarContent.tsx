@@ -4,14 +4,20 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { UploadIconWidget, ProfileIconWidget } from "../Icons";
 import Link from "next/link";
+import { useSidebarStore } from "@/components/providers/sidebarStateProvider";
 
 export default function StudioNavbarContent() {
 	const t = useTranslations("Navbar");
 
+	const { toggle } = useSidebarStore((state) => state);
+
 	return (
 		<div className="flex py-[10px] pl-4 pr-6 w-full h-full justify-between">
 			<div className="flex">
-				<button className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 rounded-full flex h-full border-2 border-transparent p-2 mr-4">
+				<button
+					className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 rounded-full flex h-full border-2 border-transparent p-2 mr-4"
+					onClick={() => toggle()}
+				>
 					<Menu color="#fff" />
 				</button>
 				<Link className="flex pt-2 mr-24" href="/">

@@ -1,20 +1,10 @@
 "use client";
 import { getChannel } from "@/actions/content/channel";
 import { getVideo } from "@/actions/content/videos";
-import { Button } from "@/components/ui/button";
 import VideoPlayer from "@/components/VideoPlayer";
 import VideoDescriptionHeader from "@/components/watch/VideoDescriptionHeader";
 import { useQuery } from "@tanstack/react-query";
-import {
-	Ellipsis,
-	Forward,
-	Loader2,
-	Scissors,
-	ThumbsDown,
-	ThumbsUp,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -23,14 +13,27 @@ export default function WatchVideoPage() {
 	const searchParams = useSearchParams();
 	const id = searchParams.get("id");
 	const router = useRouter();
-	const { isPending, data: videoData } = useQuery({
+	const {
+		isPending,
+		data: videoData,
+		refetch: refetchVideoData,
+	} = useQuery({
 		queryKey: [id],
 		queryFn: () => getVideo(id ?? ""),
 	});
-	const { isPending: isPendingChannel, data: channelData } = useQuery({
+	const {
+		isPending: isPendingChannel,
+		data: channelData,
+		refetch: refetchChannelData,
+	} = useQuery({
 		queryKey: [videoData],
 		queryFn: () => getChannel(videoData?.channelId ?? ""),
 	});
+
+	function refetchData() {
+		refetchChannelData();
+		refetchVideoData();
+	}
 
 	useEffect(() => {
 		if (id == null || id === "") router.push("/");
@@ -60,6 +63,7 @@ export default function WatchVideoPage() {
 								<VideoDescriptionHeader
 									channelData={channelData}
 									videoData={videoData}
+									refetch={refetchData}
 								/>
 								<div className="mt-2"></div>
 							</div>

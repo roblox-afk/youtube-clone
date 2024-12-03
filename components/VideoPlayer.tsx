@@ -1,11 +1,18 @@
 import { Video } from "@/lib/db/schema";
 import { cn, FormatTimeFromSeconds } from "@/lib/utils";
 import {
+	Captions,
+	CaptionsOff,
+	Maximize,
+	Minimize,
 	Pause,
 	Play,
+	RectangleHorizontal,
 	RotateCcw,
+	Settings,
 	SkipBack,
 	SkipForward,
+	TvMinimalPlay,
 	Volume1,
 	Volume2,
 	VolumeOff,
@@ -18,6 +25,9 @@ import { clamp } from "lodash";
 export default function VideoPlayer({ videoData }: { videoData: Video }) {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [isMuted, setIsMuted] = useState<boolean>(false);
+	const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+	const [isTheaterMode, setIsTheaterMode] = useState<boolean>(false);
+	const [isCaptionsEnabled, setIsCaptionsEnabled] = useState<boolean>(false);
 	const [videoDuration, setVideoDuration] = useState<number>(0);
 	const [videoProgress, setVideoProgress] = useState<number>(0);
 	const [volume, setVolume] = useState<number[]>([1]);
@@ -39,6 +49,11 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 			videoRef.current.volume = volume[0];
 		}
 	}, [videoRef, isMuted, volume]);
+
+	useEffect(() => {
+		console.log("VideoProgress: " + videoProgress);
+		console.log("VideoDuration: " + videoDuration);
+	}, [videoProgress, videoDuration]);
 
 	useEffect(() => {
 		if (!isPlaying) return;
@@ -102,7 +117,6 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 					</div>
 				</div>
 				<div className="flex absolute w-full">
-					<div className=""></div>
 					<div className="flex">
 						<Link
 							href="#"
@@ -116,7 +130,8 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 						>
 							{isPlaying ? (
 								<Pause className="size-4" />
-							) : videoProgress == videoDuration ? (
+							) : videoProgress === videoDuration ||
+							  videoProgress > videoDuration ? (
 								<RotateCcw className="size-4" />
 							) : (
 								<Play className="size-4" />
@@ -170,6 +185,72 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 								<span>{FormatTimeFromSeconds(Math.trunc(videoDuration))}</span>
 							</span>
 						</div>
+					</div>
+					<div className="flex absolute right-6">
+						<button
+							onClick={() =>
+								setIsCaptionsEnabled((prev) => {
+									return !prev;
+								})
+							}
+							className="size-12 flex justify-center items-center"
+						>
+							{isCaptionsEnabled ? (
+								<Captions className="size-4" />
+							) : (
+								<CaptionsOff className="size-4" />
+							)}
+						</button>
+						<button
+							onClick={() => console.log("Open Settings Popover")}
+							className="size-12 flex justify-center items-center"
+						>
+							<Settings className="size-4" />
+						</button>
+						{isFullscreen === false && (
+							<>
+								<button
+									onClick={() => console.log("Start Miniplayer")}
+									className="size-12 flex justify-center items-center"
+								>
+									<TvMinimalPlay className="size-4" />
+								</button>
+								<button
+									onClick={() =>
+										setIsTheaterMode((prev) => {
+											return !prev;
+										})
+									}
+									className="size-12 flex justify-center items-center"
+								>
+									{isTheaterMode ? (
+										<RectangleHorizontal className="size-4" />
+									) : (
+										<RectangleHorizontal className="size-5" />
+									)}
+								</button>
+							</>
+						)}
+						<button
+							onClick={() => {
+								setIsFullscreen((prev) => {
+									return !prev;
+								});
+
+								if (isFullscreen) {
+									videoRef.current?.requestFullscreen();
+								} else {
+									document.exitFullscreen();
+								}
+							}}
+							className="size-12 flex justify-center items-center"
+						>
+							{isFullscreen ? (
+								<Minimize className="size-4" />
+							) : (
+								<Maximize className="size-4" />
+							)}
+						</button>
 					</div>
 				</div>
 			</div>
