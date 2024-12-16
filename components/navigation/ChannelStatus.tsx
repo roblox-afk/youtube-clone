@@ -2,14 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import PlaceholderChannelIcon from "@/public/Placeholder_24x24.svg";
 import { Radio } from "lucide-react";
+import { User } from "@/lib/db/schema";
 
 export default function ChannelPage({
 	NewVideo = false,
 	IsLive = false,
+	ChannelData,
 }: {
 	NewVideo?: boolean;
 	IsLive?: boolean;
+	ChannelData: User | null;
 }) {
+	if (ChannelData == null) {
+		return <></>;
+	}
+
 	return (
 		<Link
 			href={"#"}
@@ -22,7 +29,9 @@ export default function ChannelPage({
 				height={24}
 				className="rounded-full mr-2"
 			/>
-			<h1 className="text-white text-left mr-2 w-24 truncate">1234567111111</h1>
+			<h1 className="text-white text-left mr-2 w-24 truncate">
+				{ChannelData.name}
+			</h1>
 			<div className="flex size-4 justify-center items-center">
 				{NewVideo && !IsLive && (
 					<div className="size-1 rounded-full bg-blue-600" />

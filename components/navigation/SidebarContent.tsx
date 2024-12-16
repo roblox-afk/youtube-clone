@@ -30,13 +30,31 @@ import ChannelPage from "./ChannelStatus";
 import { useTranslations } from "next-intl";
 import { useSidebarStore } from "../providers/sidebarStateProvider";
 import { authClient } from "@/lib/auth/auth-client";
+import { getSubscribedChannels } from "@/actions/content/channel";
+import { useEffect, useState } from "react";
+import { User as UserType } from "@/lib/db/schema";
 
 export default function Sidebar() {
 	const t = useTranslations("Sidebar");
 	const pathname: string = usePathname();
+	const [channels, setChannels] = useState<UserType[]>();
 
 	const { expanded } = useSidebarStore((state) => state);
 	const { data: session } = authClient.useSession();
+
+	useEffect(() => {
+		async function fetchChannels() {
+			if (session?.user == null) return;
+			const channelsData = await getSubscribedChannels(
+				session.user.subscriptions == null ? [] : session.user.subscriptions
+			);
+			setChannels(
+				channelsData === null || channelsData.length === 0 ? [] : channelsData
+			);
+		}
+		fetchChannels();
+	});
+
 	return (
 		<>
 			{expanded == true ? (
@@ -97,20 +115,27 @@ export default function Sidebar() {
 						/>
 					</div>
 					<div className="w-full my-3 h-[1px] bg-neutral-800" />
-					<div className="px-3 space-y-1 w-full">
-						<span className="text-white font-medium text-base px-4">
-							{t("subscriptions.title")}
-						</span>
-						<ChannelPage NewVideo />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-						<ChannelPage IsLive />
-					</div>
-					<div className="w-full my-3 h-[1px] bg-neutral-800" />
+					{session?.user != null ? (
+						<>
+							<div className="px-3 space-y-1 w-full">
+								<span className="text-white font-medium text-base px-4">
+									{t("subscriptions.title")}
+								</span>
+								{channels !== null && channels !== undefined ? (
+									channels.map((channel: UserType) => {
+										return (
+											<ChannelPage key={channel.id} ChannelData={channel} />
+										);
+									})
+								) : (
+									<></>
+								)}
+							</div>
+							<div className="w-full my-3 h-[1px] bg-neutral-800" />
+						</>
+					) : (
+						<></>
+					)}
 					<div className="px-3 space-y-1 w-full">
 						<span className="text-white font-medium px-4">
 							{t("explore.title")}

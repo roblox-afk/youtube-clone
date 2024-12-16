@@ -3,6 +3,7 @@ import { getChannel } from "@/actions/content/channel";
 import { getVideo } from "@/actions/content/videos";
 import VideoPlayer from "@/components/VideoPlayer";
 import VideoDescriptionHeader from "@/components/watch/VideoDescriptionHeader";
+import useMetadata from "@/lib/useMetadata";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -30,6 +31,10 @@ export default function WatchVideoPage() {
 		queryFn: () => getChannel(videoData?.channelId ?? ""),
 	});
 
+	useMetadata(
+		(isPending ? "Loading video" : videoData?.title) + " - Youtube Clone",
+		"Watch " + (isPending ? "Loading video" : videoData?.title)
+	);
 	function refetchData() {
 		refetchChannelData();
 		refetchVideoData();
