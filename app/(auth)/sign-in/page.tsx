@@ -54,7 +54,7 @@ export default function SignInPage() {
 	);
 
 	return (
-		<div className="h-full w-full pt-10 flex flex-col px-5 relative">
+		<div className="h-full w-96 pt-10 flex flex-col px-5 relative">
 			<Link
 				href="/"
 				className="flex hover:text-neutral-300 ease-in transition-all mb-2"

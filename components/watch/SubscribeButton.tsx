@@ -33,7 +33,7 @@ export default function SubscribeButton({
 			sessionData.data.user === null ? (
 				<Popover>
 					<PopoverTrigger asChild>
-						<Button className="rounded-full font-semibold">Subscribe 2</Button>
+						<Button className="rounded-full font-semibold">Subscribe</Button>
 					</PopoverTrigger>
 					<PopoverContent>Sign in to continue</PopoverContent>
 				</Popover>

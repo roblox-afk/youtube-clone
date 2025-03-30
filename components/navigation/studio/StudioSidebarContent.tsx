@@ -183,7 +183,7 @@ export default function StudioSidebarContent({
 								minimized
 							/>
 						</div>
-						<div className="px-3 space-y-1 bottom-1 w-full absolute">
+						<div className="px-3 space-y-1 bottom-0 w-full absolute">
 							<SidebarItem
 								Icon={Settings}
 								label={t("misc.settings")}

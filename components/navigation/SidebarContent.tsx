@@ -35,6 +35,7 @@ import { useEffect, useState } from "react";
 import { User as UserType } from "@/lib/db/schema";
 
 export default function Sidebar() {
+	"use client";
 	const t = useTranslations("Sidebar");
 	const pathname: string = usePathname();
 	const [channels, setChannels] = useState<UserType[]>();
@@ -53,7 +54,7 @@ export default function Sidebar() {
 			);
 		}
 		fetchChannels();
-	});
+	}, [session]);
 
 	return (
 		<>

@@ -11,9 +11,9 @@ export default function StudioRedirectPage() {
 
 	useEffect(() => {
 		if (!session && !isPending) {
-			router.push("/");
+			router.replace("/");
 		} else if (session && !isPending) {
-			router.push("/studio/channel/" + session.user.id);
+			router.replace("/studio/channel/" + session.user.id);
 		}
 	}, [isPending, router, session]);
 

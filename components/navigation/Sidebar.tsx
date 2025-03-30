@@ -29,8 +29,12 @@ export default function Sidebar({
 				expanded ? "w-64" : "w-[72px] px-1",
 				minimized ? "hidden" : ""
 			)}
+			suppressHydrationWarning
 		>
-			<div className={cn("flex-col", expanded ? "w-60" : "w-16")}>
+			<div
+				className={cn("flex-col", expanded ? "w-60" : "w-16")}
+				suppressHydrationWarning
+			>
 				{children}
 			</div>
 		</div>

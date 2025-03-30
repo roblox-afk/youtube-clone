@@ -76,6 +76,7 @@ export default function StudioLayout({
 					"relative flex h-full flex-row mt-14",
 					expanded ? "ml-64" : "ml-[72px]"
 				)}
+				suppressHydrationWarning
 			>
 				{children}
 			</main>

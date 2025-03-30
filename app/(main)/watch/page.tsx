@@ -1,82 +1,31 @@
-"use client";
-import { getChannel } from "@/actions/content/channel";
+import {
+	dehydrate,
+	HydrationBoundary,
+	QueryClient,
+} from "@tanstack/react-query";
+import WatchVideoClientPage from "./client";
 import { getVideo } from "@/actions/content/videos";
-import VideoPlayer from "@/components/VideoPlayer";
-import VideoDescriptionHeader from "@/components/watch/VideoDescriptionHeader";
-import useMetadata from "@/lib/useMetadata";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { getChannel } from "@/actions/content/channel";
 
-export default function WatchVideoPage() {
-	const searchParams = useSearchParams();
-	const id = searchParams.get("id");
-	const router = useRouter();
-	const {
-		isPending,
-		data: videoData,
-		refetch: refetchVideoData,
-	} = useQuery({
+type Params = Promise<{ id: string }>;
+
+export default async function WatchVideoPage({ params }: { params: Params }) {
+	const queryClient = new QueryClient();
+	const { id } = await params;
+
+	await queryClient.prefetchQuery({
 		queryKey: [id],
-		queryFn: () => getVideo(id ?? ""),
-	});
-	const {
-		isPending: isPendingChannel,
-		data: channelData,
-		refetch: refetchChannelData,
-	} = useQuery({
-		queryKey: [videoData],
-		queryFn: () => getChannel(videoData?.channelId ?? ""),
+		queryFn: () => getVideo,
 	});
 
-	useMetadata(
-		(isPending ? "Loading video" : videoData?.title) + " - Youtube Clone",
-		"Watch " + (isPending ? "Loading video" : videoData?.title)
-	);
-	function refetchData() {
-		refetchChannelData();
-		refetchVideoData();
-	}
-
-	useEffect(() => {
-		if (id == null || id === "") router.push("/");
-		if (!isPending && videoData == null) {
-			toast.error("Invalid video id");
-			router.push("/");
-		}
-	}, [id, router, videoData, isPending]);
+	await queryClient.prefetchQuery({
+		queryKey: ["channelData"],
+		queryFn: () => getChannel,
+	});
 
 	return (
-		<div className="mx-[74.5px] flex justify-center w-full">
-			{isPending ||
-			videoData == null ||
-			isPendingChannel ||
-			channelData == null ? (
-				<>
-					<Loader2 className="animate-spin" />
-				</>
-			) : (
-				<>
-					<div className="ml-6 pt-6 pr-6">
-						<div className="w-[853px]">
-							<VideoPlayer videoData={videoData} />
-						</div>
-						<div>
-							<div className="mt-3 mb-6">
-								<VideoDescriptionHeader
-									channelData={channelData}
-									videoData={videoData}
-									refetch={refetchData}
-								/>
-								<div className="mt-2"></div>
-							</div>
-						</div>
-					</div>
-					<div className="pt-6 pr-6 w-[402px]"></div>
-				</>
-			)}
-		</div>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<WatchVideoClientPage />
+		</HydrationBoundary>
 	);
 }

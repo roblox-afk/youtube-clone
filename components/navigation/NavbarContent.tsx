@@ -9,6 +9,7 @@ import {
 	ProfileIconWidget,
 } from "./Icons";
 import { useSidebarStore } from "../providers/sidebarStateProvider";
+import Link from "next/link";
 
 export default function NavBarContent() {
 	const t = useTranslations("Navbar");
@@ -24,7 +25,7 @@ export default function NavBarContent() {
 				>
 					<Menu color="#fff" />
 				</button>
-				<a className="flex" href="">
+				<Link className="flex" href="/">
 					<Image
 						className="ml-4 fill-white"
 						src={YoutubeImageLight}
@@ -35,7 +36,7 @@ export default function NavBarContent() {
 					<span className="text-[10px] ml-1 mt-1 text-[#AAAAAA] font-semibold font-sans">
 						NO
 					</span>
-				</a>
+				</Link>
 			</div>
 			<div className="sm:flex h-10 items-center hidden">
 				<div className="h-full ml-8 pl-2 bg-stone-950 border-neutral-700 float-start border has-[:focus]:border-blue-400 has-[:focus]:ml-0 rounded-l-full items-center flex flex-row-reverse left-2">

@@ -20,11 +20,11 @@ export default function StudioNavbarContent() {
 				>
 					<Menu color="#fff" />
 				</button>
-				<Link className="flex pt-2 mr-24" href="/">
+				<Link className="flex pt-2 mr-24" href="/studio">
 					<Image
 						className="fill-white"
 						src={YoutubeStudioImageWhite}
-						alt="test"
+						alt="Youtube Studio Logo"
 						width={97}
 						height={24}
 					/>

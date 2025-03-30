@@ -3,15 +3,16 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import Providers from "@/components/Providers";
 import ErrorProvider from "@/components/ErrorProvider";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const roboto = Roboto({
 	weight: "400",
 	subsets: ["latin"],
+	style: ["normal", "italic"],
 	display: "swap",
 });
 
@@ -30,13 +31,13 @@ export default async function RootLayout({
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body className={cn("bg-transparent", roboto.className)}>
+			<body className={`bg-transparent ${roboto.className}`}>
 				<Providers>
 					<NextIntlClientProvider messages={messages}>
 						<Suspense>
 							<ErrorProvider />
 						</Suspense>
-						{children}
+						<TooltipProvider>{children}</TooltipProvider>
 						<Toaster />
 					</NextIntlClientProvider>
 				</Providers>

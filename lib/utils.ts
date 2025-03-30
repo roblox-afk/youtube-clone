@@ -40,7 +40,7 @@ export function FormatTimeSince(
 		(new Date().valueOf() - new Date(date).valueOf()) / 1000
 	);
 	const { interval, unit } = calculateTimeDifference(time);
-	const suffix = interval === 1 ? "" : "s";
+	const suffix = interval !== 1 ? "" : "s";
 	return suffix === "s" && removeSeconds
 		? "Now"
 		: `${interval} ${unit}${suffix} ago`;

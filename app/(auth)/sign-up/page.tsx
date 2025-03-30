@@ -76,7 +76,7 @@ export default function SignUpPage() {
 	}
 
 	return (
-		<div className="h-full w-full pt-10 flex relative flex-col px-5">
+		<div className="h-full w-96 pt-10 flex relative flex-col px-5">
 			<button
 				className="flex hover:text-neutral-300 ease-in transition-all  mb-2"
 				onClick={() =>

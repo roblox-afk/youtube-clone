@@ -2,24 +2,32 @@
 import { db } from "@/lib/db";
 import { User, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_cache } from "next/cache";
 
-export async function getChannel(id: string) {
-	const data = await db.select().from(users).where(eq(users.id, id));
-	if (data[0] == null) return null;
-	return data[0];
-}
+export const getChannel = unstable_cache(
+	async (id: string) => {
+		const data = await db.select().from(users).where(eq(users.id, id));
+		if (data[0] == null) return null;
+		return data[0];
+	},
+	["channel"],
+	{ revalidate: 360, tags: ["channel"] }
+);
 
-export async function getSubscribedChannels(channels: string[]) {
-	let data: User[] = [];
-	channels.forEach(async (id) => {
-		const channelData = await getChannel(id);
-		if (channelData == null) return;
-		data = [...data, channelData];
-	});
-	if (data.length === 0) return null;
-	return data;
-}
+export const getSubscribedChannels = unstable_cache(
+	async (channels: string[]) => {
+		let data: User[] = [];
+		channels.forEach(async (id) => {
+			const channelData = await getChannel(id);
+			if (channelData == null) return;
+			data = [...data, channelData];
+		});
+		if (data.length === 0) return null;
+		return data;
+	},
+	["subscribedChannels"],
+	{ revalidate: 360, tags: ["subscribedChannels"] }
+);
 
 export async function subscribeToChannel(channelId: string, userId: string) {
 	const userData = await db.select().from(users).where(eq(users.id, userId));

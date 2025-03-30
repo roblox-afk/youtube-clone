@@ -25,7 +25,6 @@ import { clamp } from "lodash";
 export default function VideoPlayer({ videoData }: { videoData: Video }) {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [isMuted, setIsMuted] = useState<boolean>(false);
-	const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 	const [isTheaterMode, setIsTheaterMode] = useState<boolean>(false);
 	const [isCaptionsEnabled, setIsCaptionsEnabled] = useState<boolean>(false);
 	const [videoDuration, setVideoDuration] = useState<number>(0);
@@ -33,6 +32,7 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 	const [volume, setVolume] = useState<number[]>([1]);
 	const [prevVolume, setPrevVolume] = useState<number[]>([1]);
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	const handleVideoPlayToggle = (newState: 0 | 1) => {
 		if (newState === 1) {
@@ -49,11 +49,6 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 			videoRef.current.volume = volume[0];
 		}
 	}, [videoRef, isMuted, volume]);
-
-	useEffect(() => {
-		console.log("VideoProgress: " + videoProgress);
-		console.log("VideoDuration: " + videoDuration);
-	}, [videoProgress, videoDuration]);
 
 	useEffect(() => {
 		if (!isPlaying) return;
@@ -78,9 +73,9 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 	}, [isPlaying, videoDuration, videoProgress]);
 
 	return (
-		<div className="relative w-full">
+		<div className="relative w-full" ref={containerRef}>
 			<video
-				className="rounded-sm flex peer w-full"
+				className="rounded-sm flex peer w-full :"
 				ref={videoRef}
 				muted={isMuted}
 				onLoadedMetadata={() =>
@@ -207,10 +202,16 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 						>
 							<Settings className="size-4" />
 						</button>
-						{isFullscreen === false && (
+						{document.fullscreenElement === null && (
 							<>
 								<button
-									onClick={() => console.log("Start Miniplayer")}
+									onClick={() => {
+										if (document.pictureInPictureElement === null) {
+											videoRef.current?.requestPictureInPicture();
+										} else {
+											document.exitFullscreen();
+										}
+									}}
 									className="size-12 flex justify-center items-center"
 								>
 									<TvMinimalPlay className="size-4" />
@@ -233,19 +234,15 @@ export default function VideoPlayer({ videoData }: { videoData: Video }) {
 						)}
 						<button
 							onClick={() => {
-								setIsFullscreen((prev) => {
-									return !prev;
-								});
-
-								if (isFullscreen) {
-									videoRef.current?.requestFullscreen();
+								if (document.fullscreenElement === null) {
+									containerRef.current?.requestFullscreen();
 								} else {
 									document.exitFullscreen();
 								}
 							}}
 							className="size-12 flex justify-center items-center"
 						>
-							{isFullscreen ? (
+							{document.fullscreenElement ? (
 								<Minimize className="size-4" />
 							) : (
 								<Maximize className="size-4" />

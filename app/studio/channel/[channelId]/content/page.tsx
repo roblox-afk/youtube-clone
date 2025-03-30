@@ -27,38 +27,6 @@ export default function StudioContentPage({
 	);
 
 	const [videos, setVideos] = useState<Video[]>();
-	// [
-	// 	{
-	// 		id: "sdwas",
-	// 		title: "bob",
-	// 		description: "testes",
-	// 		visibility: VideoStatus.DRAFT,
-	// 		restrictions: VideoRestrictions.NONE,
-	// 		thumbnailUrl:
-	// 			"https://res.cloudinary.com/dafd64b6r/image/upload/v1730146068/youtube-clone/hbtmsrqyczlxefj6pfyw.jpg",
-	// 		views: 10,
-	// 		likes: 20,
-	// 		disLikes: 10,
-	// 		comments: ["test", "test"],
-	// 		sourceUrl: "test",
-	// 		createdAt: new Date("2024-10-11"),
-	// 	},
-	// 	{
-	// 		id: "sdwas",
-	// 		title: "23212",
-	// 		description: "testes",
-	// 		visibility: VideoStatus.DRAFT,
-	// 		restrictions: VideoRestrictions.NONE,
-	// 		thumbnailUrl:
-	// 			"https://res.cloudinary.com/dafd64b6r/image/upload/v1730146068/youtube-clone/hbtmsrqyczlxefj6pfyw.jpg",
-	// 		views: 10,
-	// 		likes: 20,
-	// 		disLikes: 10,
-	// 		comments: ["test", "test"],
-	// 		sourceUrl: "test",
-	// 		createdAt: new Date("2024-10-11"),
-	// 	},
-	// ];
 
 	const onTabChange = (newState: string) => {
 		setActiveTab(newState);
@@ -69,6 +37,7 @@ export default function StudioContentPage({
 
 	useEffect(() => {
 		async function getData() {
+			console.log("Hello");
 			const result = await getVideos(channelId);
 			setVideos(result);
 		}

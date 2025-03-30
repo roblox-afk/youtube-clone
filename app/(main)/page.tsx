@@ -5,12 +5,13 @@ import { VideoStatus } from "@/lib/db/schema";
 
 export default async function Home() {
 	const videos = await getAllVideos();
+
 	return (
-		<div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5 gap-4 w-full mt-6">
+		<div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6  gap-4 w-full mt-6">
 			{...videos?.map(async (video) => {
 				const channelData = await getChannel(video.channelId);
-				if (channelData == null) return;
-				if (video.visibility !== VideoStatus.PUBLIC) return;
+				if (channelData == null) return <></>;
+				if (video.visibility !== VideoStatus.PUBLIC) return <></>;
 				return (
 					<VideoCard key={video.id} data={video} channelData={channelData} />
 				);
