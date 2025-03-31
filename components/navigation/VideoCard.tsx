@@ -20,7 +20,7 @@ export default function VideoCard({
 			onClick={() => router.push("/watch?id=" + data.id)}
 			className="ml-6 flex text-left w-80 mx-2 mb-10 h-full flex-col cursor-pointer"
 		>
-			<div className="w-full h-48 bg-white rounded-xl relative object-cover flex">
+			<div className="w-full h-48 bg-white rounded-xl relative object-cover flex overflow-hidden">
 				<Image
 					src={
 						data.thumbnailUrl == null || data.thumbnailUrl == ""
