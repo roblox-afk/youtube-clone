@@ -17,7 +17,7 @@ export default function NavBarContent() {
 	const { toggle } = useSidebarStore((state) => state);
 
 	return (
-		<div className="flex bg-black">
+		<>
 			<div className="flex">
 				<button
 					className="bg-gray-400 bg-opacity-0 hover:bg-opacity-20 p-2 rounded-full flex h-full"
@@ -67,6 +67,6 @@ export default function NavBarContent() {
 				<NotificationIconWidget />
 				<ProfileIconWidget />
 			</div>
-		</div>
+		</>
 	);
 }
